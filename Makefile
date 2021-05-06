@@ -42,8 +42,14 @@ BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
-#ROMFS	:=	romfs
+ROMFS	:=	romfs
 APP_VERSION	:=	2.4.1
+
+APP_TITLE 	:= RetroArch Forwarder
+APP_AUTHOR 	:= zzz
+APP_VERSION := 2.4.1
+APP_TITLEID := 01690a9b00fd7000
+NACPFLAGS 	:= --titleid=$(APP_TITLEID)
 
 ifeq ($(RELEASE),)
 	APP_VERSION	:=	$(APP_VERSION)-$(shell git describe --dirty --always)
@@ -175,7 +181,7 @@ clean:
 ifeq ($(strip $(APP_JSON)),)
 	@rm -fr $(BUILD) $(TARGET).nro $(TARGET).nacp $(TARGET).elf
 else
-	@rm -fr $(BUILD) $(TARGET).nsp $(TARGET).nso $(TARGET).npdm $(TARGET).elf
+	@rm -fr $(BUILD) $(TARGET).nsp $(TARGET).nso $(TARGET).npdm $(TARGET).elf $(TARGET).nacp
 endif
 
 
@@ -200,9 +206,9 @@ endif
 
 else
 
-all	:	$(OUTPUT).nsp
+all	:	$(OUTPUT).nsp $(TARGET).nacp
 
-$(OUTPUT).nsp	:	$(OUTPUT).nso $(OUTPUT).npdm
+$(OUTPUT).nsp	:	$(OUTPUT).nso $(OUTPUT).npdm 
 
 $(OUTPUT).nso	:	$(OUTPUT).elf
 
